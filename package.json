@@ -1,0 +1,32 @@
+{
+  "name": "wikiplace",
+  "version": "1.0.0",
+  "description": "A JavaScript/Node.js library to search for Wikipedia articles based on geolocation",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --watchAll",
+    "test-coverage": "jest --collect-coverage --testEnvironment=node --forceExit --maxWorkers=1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mateusk/wikiplace.git"
+  },
+  "keywords": [
+    "wikipedia",
+    "mediawiki API",
+    "geolocation",
+    "geosearch"
+  ],
+  "author": "Mateus Knelsen",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mateusk/wikiplace/issues"
+  },
+  "homepage": "https://github.com/mateusk/wikiplace#readme",
+  "devDependencies": {
+    "jest": "^27.0.3"
+  },
+  "dependencies": {
+    "node-fetch": "^2.6.1"
+  }
+}
