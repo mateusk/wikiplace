@@ -12,8 +12,6 @@ async function findWikiPlaces(latitude, longitude, options) {
 
   options = Object.assign({}, defaults, options)
 
-  // console.log(options)
-
   let query = `https://en.wikipedia.org/w/api.php?action=query&generator=geosearch&format=json&ggscoord=${latitude}%7C${longitude}&ggsradius=${options.radius}&ggslimit=${options.limit}&prop=coordinates`
   if (options.withImage) {
     query = query.replace('&prop=coordinates', '&prop=coordinates|pageimages')
@@ -25,16 +23,10 @@ async function findWikiPlaces(latitude, longitude, options) {
     query += '&inprop=url'
   }
 
-  // console.log(query)
-
   try {
     const response = await fetch(query)
 
-    // console.log(response)
-
     const json = await response.json()
-
-    // console.log(json)
 
     if (json.query === undefined) return []
 
