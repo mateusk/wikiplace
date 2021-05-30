@@ -50,8 +50,6 @@ async function findWikiPlaces(latitude, longitude, options) {
       })
     }
 
-    // console.log('resultArray: ' + resultArray)
-
     return resultArray
   } catch (error) {
     throw error
