@@ -1,3 +1,4 @@
+// replace with axios
 const fetch = require('node-fetch')
 
 async function findWikiPlaces(latitude, longitude, options) {
@@ -29,7 +30,7 @@ async function findWikiPlaces(latitude, longitude, options) {
     const json = await response.json()
 
     if (json.query === undefined) return []
-
+    // end try-catch here
     let resultArray = []
 
     for (const [key, value] of Object.entries(json.query.pages)) {
@@ -37,16 +38,16 @@ async function findWikiPlaces(latitude, longitude, options) {
         title,
         coordinates: [{ lat, lon }],
         description,
-        thumbnail: { source } = { source: undefined },
+        thumbnail: { source: imageUrl } = { source: undefined },
         fullurl: articleUrl,
       } = value || {}
-
+      // use an array map instead
       resultArray.push({
-        title: title,
-        description: description,
+        title,
+        description,
         coordinates: { latitude: lat, longitude: lon },
         articleUrl,
-        imageURL: source,
+        imageUrl,
       })
     }
 

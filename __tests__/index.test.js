@@ -9,7 +9,7 @@ it('Should return an object containing Mediawiki API results based on given geol
       description: undefined,
       coordinates: { latitude: 37.78681944, longitude: -122.39990556 },
       articleUrl: 'https://en.wikipedia.org/wiki/140_New_Montgomery',
-      imageURL: 'https://upload.wikimedia.org/wikipedia/commons/e/ed/Location_map_San_Francisco_Central.png',
+      imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/e/ed/Location_map_San_Francisco_Central.png',
     },
   ]
 
@@ -53,17 +53,16 @@ it('Should return an object containing Mediawiki API results based on given geol
   })
 
   fetch.mockImplementation(() => response)
-  await response
 
-  return findWikiPlaces(37.786952, -122.399523, {
+  const data = await findWikiPlaces(37.786952, -122.399523, {
     limit: 1,
     withImage: true,
     description: true,
     getUrl: true,
     maxImageWidth: 1920,
-  }).then(data => {
-    expect(data).toMatchObject(expectedResult)
   })
+
+  expect(data).toMatchObject(expectedResult)
 })
 
 it('Should return an empty array if no search results were found', async () => {
@@ -82,10 +81,25 @@ it('Should return an empty array if no search results were found', async () => {
   })
 
   fetch.mockImplementation(() => response)
-  await response
 
   return findWikiPlaces(1, 1).then(data => {
     expect(data).toMatchObject(expectedResult)
   })
 })
 
+it('Should throw an error if API call failed', async () => {
+  const response = Promise.resolve({
+    ok: false,
+    status: 400,
+    body: {},
+  })
+
+  fetch.mockReject(response)
+
+  try {
+    await findWikiPlaces(1, 1)
+  } catch (e) {
+    expect(e).toEqual(response)
+    expect(await findWikiPlaces(1, 1)).rejects.toThrow(e)
+  }
+})
